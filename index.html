@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="تطبيق الري الذكي لتحسين إدارة المياه والمحاصيل">
+  <meta name="author" content="Smart Irrigation Team">
+  <title>تطبيق الري الذكي</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico">
+
+  <h4> ❤️ Loaie A. Sheerah 2024 </h4>
+  <p style="font-size: 1rem; color: #4caf50; margin-top: 5px;">
+  </p>
+  </header>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <h1>تطبيق الري الذكي</h1>
+      <p>تحكم متكامل في نظام الري باستخدام الذكاء الاصطناعي</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- بيانات الاستشعار -->
+    <section class="sensor-data">
+      <h2>بيانات الاستشعار</h2>
+      <div class="data-grid">
+        <div>
+          <h3>رطوبة التربة</h3>
+          <p><span id="soil-moisture">-</span>%</p>
+        </div>
+        <div>
+          <h3>درجة الحرارة</h3>
+          <p><span id="temperature">-</span>°C</p>
+        </div>
+        <div>
+          <h3>حالة الطقس</h3>
+          <p><span id="weather">-</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- التحكم في الري -->
+    <section class="controls">
+      <h2>التحكم في الري</h2>
+      <div class="button-group">
+        <button id="start-irrigation" class="btn">تشغيل الري</button>
+        <button id="stop-irrigation" class="btn danger">إيقاف الري</button>
+      </div>
+    </section>
+
+    <!-- جدولة الري -->
+    <section class="schedule">
+      <h2>جدولة الري</h2>
+      <form>
+        <label for="schedule-time">حدد وقت الري:</label>
+        <input type="time" id="schedule-time" required>
+        <button id="set-schedule" class="btn">ضبط الجدول</button>
+      </form>
+    </section>
+    <section class="decision">
+      <h2>قرار الري</h2>
+      <p id="irrigation-decision" style="font-size: 1.2rem;">انتظر تحديث البيانات...</p>
+    </section>
+    <section class="report">
+      <h2>تقرير شامل</h2>
+      <button id="generate-report" class="btn">توليد التقرير</button>
+      <div id="report-output" style="margin-top: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #f9f9f9;">
+        <p>سيظهر التقرير هنا بعد توليده...</p>
+      </div>
+    </section>
+    <section class="chart-map">
+
+      <div id="map-container">
+        <div id="map"></div>
+      </div>
+
+    </section>
+    <section class="statistics">
+      <h2>إحصائيات المدن</h2>
+      <table id="stats-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <thead>
+          <tr>
+            <th>المدينة</th>
+            <th>نوع المزرعة</th>
+            <th>المساحة (هكتار)</th>
+            <th>كمية المياه المستخدمة (م³)</th>
+            <th>كمية المياه الموفرّة (م³)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- سيتم إضافة البيانات هنا ديناميكيًا -->
+        </tbody>
+      </table>
+    </section>
+    <section class="charts">
+      <h2>تحليل إحصائيات المدن</h2>
+      <div style="width: 100%; margin-bottom: 30px;">
+        <canvas id="water-usage-chart" style="max-height: 400px;"></canvas>
+      </div>
+      <div style="width: 100%;">
+        <canvas id="water-savings-chart" style="max-height: 400px;"></canvas>
+      </div>
+    </section>
+    <section class="additional-statistics">
+      <h2>إحصائيات إضافية</h2>
+      <div style="width: 100%; margin-bottom: 30px;">
+        <canvas id="water-cost-chart" style="max-height: 400px;"></canvas>
+      </div>
+      <div style="width: 100%;">
+        <canvas id="farm-performance-chart" style="max-height: 400px;"></canvas>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام الري الذكي</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+</head>
+
+<body>
+
+  <!-- صفحة About -->
+  <section id="about">
+    <h2>عن التطبيق</h2>
+    <p>
+      نظام الري الذكي هو نظام متكامل يستخدم تقنيات الذكاء الاصطناعي وإنترنت الأشياء لتقديم حلول ري مبتكرة. يوفر هذا النظام إدارة مزارع فعالة ويضمن ترشيد استهلاك المياه.
+    </p>
+  </section>
+
+  <!-- صفحة Register -->
+  <section id="register">
+    <h2>إنشاء حساب</h2>
+    <form>
+      <label for="username">اسم المستخدم:</label>
+      <input type="text" id="username" placeholder="ادخل اسم المستخدم" required>
+      <label for="email">البريد الإلكتروني:</label>
+      <input type="email" id="email" placeholder="ادخل بريدك الإلكتروني" required>
+      <label for="password">كلمة المرور:</label>
+      <input type="password" id="password" placeholder="ادخل كلمة المرور" required>
+      <label for="confirm-password">تأكيد كلمة المرور:</label>
+      <input type="password" id="confirm-password" placeholder="أعد كتابة كلمة المرور" required>
+      <button type="submit">إنشاء الحساب</button>
+    </form>
+  </section>
+
+  <!-- صفحة Dashboard -->
+  <section id="dashboard">
+    <h2>لوحة التحكم</h2>
+    <p>مرحبًا بك في لوحة التحكم الخاصة بك! هنا يمكنك:</p>
+    <ul>
+      <li>عرض بيانات الري الخاصة بمزرعتك.</li>
+      <li>تحميل التقارير التفصيلية بصيغة PDF.</li>
+      <li>متابعة أداء المزرعة.</li>
+    </ul>
+  </section>
+
+  <!-- صفحة Ratings -->
+  <section id="ratings">
+    <h2>تقييم المنتجات</h2>
+    <p>يمكنك تقييم المنتجات والخدمات هنا:</p>
+    <form>
+      <label for="product-rating">التقييم:</label>
+      <select id="product-rating">
+        <option value="5">⭐⭐⭐⭐⭐</option>
+        <option value="4">⭐⭐⭐⭐</option>
+        <option value="3">⭐⭐⭐</option>
+        <option value="2">⭐⭐</option>
+        <option value="1">⭐</option>
+      </select>
+      <label for="review">التعليق:</label>
+      <textarea id="review" placeholder="اكتب تعليقك هنا"></textarea>
+      <button type="submit">إرسال التقييم</button>
+    </form>
+  </section>
+
+  <!-- صفحة Blog -->
+  <section id="blog">
+    <h2>مدونة</h2>
+    <article>
+      <h3>فوائد الري الذكي</h3>
+      <p>استخدام أنظمة الري الذكية يساهم في ترشيد استهلاك المياه وزيادة الإنتاجية الزراعية.</p>
+    </article>
+    <article>
+      <h3>أفضل الممارسات لري المزارع</h3>
+      <p>تعرف على أفضل الأساليب لتحسين كفاءة استخدام المياه في الزراعة.</p>
+    </article>
+  </section>
+
+  <!-- صفحة Notifications -->
+  <section id="notifications">
+    <h2>الإشعارات</h2>
+    <p>ستظهر هنا جميع الإشعارات المتعلقة بنظام الري الخاص بك.</p>
+  </section>
+
+  <!-- صفحة Support -->
+  <section id="support">
+    <h2>الدعم الفني</h2>
+    <form>
+      <label for="support-message">كيف يمكننا مساعدتك؟</label>
+      <textarea id="support-message" placeholder="اكتب استفسارك هنا"></textarea>
+      <button type="submit">إرسال</button>
+    </form>
+  </section>
+</body>
+
+</html>
+
+<!-- قسم متجر المنتجات -->
+<section id="products">
+  <h2>متجر المنتجات</h2>
+  <div class="product">
+    <span class="icon">🚁</span>
+    <h3>منتج 1: درونز</h3>
+    <p>أجهزة درونز تستخدم لمراقبة المزارع وتحليل البيانات الجوية بدقة عالية.</p>
+    <button>أضف إلى السلة</button>
+  </div>
+  <div class="product">
+    <span class="icon">📡</span>
+    <h3>منتج 2: مستشعرات</h3>
+    <p>مستشعرات لرصد رطوبة التربة، درجة الحرارة، وحالة الطقس.</p>
+    <button>أضف إلى السلة</button>
+  </div>
+  <div class="product">
+    <span class="icon">🖥️</span>
+    <h3>منتج 3: لوحات تحكم</h3>
+    <p>لوحات تحكم ذكية لإدارة أنظمة الري بكل سهولة وفعالية.</p>
+    <button>أضف إلى السلة</button>
+  </div>
+</section>
+
+<!-- قسم باقات الخدمات -->
+<section id="packages">
+  <h2>باقات الخدمات</h2>
+  <div class="package">
+    <span class="icon">🥇</span>
+    <h3>الباقة الذهبية</h3>
+    <p>أفضل باقة تقدم جميع الميزات المتقدمة لنظام الري الذكي مع دعم كامل.</p>
+    <button>اشترك الآن</button>
+  </div>
+  <div class="package">
+    <span class="icon">🥈</span>
+    <h3>الباقة الفضية</h3>
+    <p>باقة متوسطة تحتوي على معظم الميزات الضرورية لتلبية احتياجات المزارع.</p>
+    <button>اشترك الآن</button>
+  </div>
+  <div class="package">
+    <span class="icon">🥉</span>
+    <h3>الباقة البرونزية</h3>
+    <p>باقة اقتصادية تناسب المزارع الصغيرة والاحتياجات الأساسية.</p>
+    <button>اشترك الآن</button>
+  </div>
+</section>
+
+<section id="faq">
+  <h2>الأسئلة الشائعة</h2>
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">❓ كيف أبدأ باستخدام النظام؟</div>
+    <div class="faq-answer">يمكنك البدء بإنشاء حساب جديد عبر صفحة "إنشاء حساب" ومن ثم تسجيل الدخول.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">❓ ما هي طرق الدفع المتاحة؟</div>
+    <div class="faq-answer">نقبل جميع بطاقات الائتمان والدفع عبر التحويل البنكي.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">❓ هل يمكنني ترقية باقتي؟</div>
+    <div class="faq-answer">نعم، يمكنك ترقية باقتك عبر صفحة "باقات الخدمات".</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">❓ ما هي تكلفة الباقات؟</div>
+    <div class="faq-answer">تكلفة الباقات تعتمد على نوع الباقة (ذهبية، فضية، برونزية).</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">❓ كيف يمكنني الحصول على الدعم الفني؟</div>
+    <div class="faq-answer">يمكنك التواصل معنا عبر صفحة "الدعم الفني".</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">❓ هل يدعم النظام جميع أنواع المزارع؟</div>
+    <div class="faq-answer">نعم، النظام مصمم لدعم مختلف أنواع المزارع سواء الصغيرة أو الكبيرة.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">❓ هل يمكنني إلغاء اشتراكي؟</div>
+    <div class="faq-answer">نعم، يمكنك إلغاء اشتراكك في أي وقت عبر التواصل مع الدعم الفني.</div>
+  </div>
+</section>
+<footer>
+  <div class="container">
+    <p> © تطبيق الري الذكي (جميع الحقوق محفوظة 2024) </p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
